@@ -1,0 +1,48 @@
+@model parcial1_hospitales.Models.Doctor
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Doctor</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.isAvailable)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.isAvailable)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.specialty)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.specialty)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.hospital)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.hospital.id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,4 +1,4 @@
-namespace parcial1_hospitales.Models;
+namespace Hospitales.Models;
 
 public class ErrorViewModel
 {
