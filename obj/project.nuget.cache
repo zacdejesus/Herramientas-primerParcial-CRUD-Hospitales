@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jzzqoYLIK3vqTseTVOmEcAT7stemYuEPy1VUnWLKLryjLPjdxuyuuCbKHWb5cTcuIrRrOsBFjFjB0etCv+euCg==",
+  "dgSpecHash": "1xoBcFrZ9TxmuGxTPdbJxvCLSevBgqf2nOPleTnvgnJiwaMwrd6EH7Bs0wez1B9OhyTBdCBsddFxQCm0dsnAtA==",
   "success": true,
-  "projectFilePath": "/Users/z/Desktop/Hospitales/Hospitales.csproj",
+  "projectFilePath": "/Users/z/Desktop/ISTEA/Herramientas/Herramientas-primerParcial-CRUD-Hospitales/Hospitales.csproj",
   "expectedPackageFiles": [
     "/Users/z/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/z/.nuget/packages/microsoft.aspnetcore.razor.language/6.0.11/microsoft.aspnetcore.razor.language.6.0.11.nupkg.sha512",
