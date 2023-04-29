@@ -22,8 +22,10 @@ namespace Hospitales.Controllers
         // GET: Hospital
         public async Task<IActionResult> Index()
         {
-              return _context.Hospital != null ? 
-                          View(await _context.Hospital.ToListAsync()) :
+            var model = await _context.Hospital.Include(x => x.Doctors).ToListAsync();
+            
+            return _context.Hospital != null ? 
+                          View(model) :
                           Problem("Entity set 'HospitalesContext.Hospital'  is null.");
         }
 

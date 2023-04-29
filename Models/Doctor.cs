@@ -9,7 +9,6 @@ public class Doctor
     public int Age { get; set; }
     public bool isAvailable { get; set; }
     public string specialty { get; set; }
-
     public int? hospitalId { get; set; }
     public virtual Hospital? hospital { get; set; }
 }
