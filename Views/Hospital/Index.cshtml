@@ -34,6 +34,7 @@
                 @Html.DisplayFor(modelItem => item.address)
             </td>
             <td>
+                <!-- TODO: Do this better -->
                 @foreach (var item2 in item.Doctors) {
                     @Html.DisplayFor(modelItem => item2.name)
                     <br/>
