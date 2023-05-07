@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Hospitales.Data;
 using parcial1_hospitales.Models;
+using parcial1_hospitales.ViewModels;
 
 namespace Hospitales.Controllers
 {
@@ -20,10 +21,20 @@ namespace Hospitales.Controllers
         }
 
         // GET: Doctor
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? filter)
         {
-            var hospitalesContext = _context.Doctor.Include(d => d.hospital);
-            return View(await hospitalesContext.ToListAsync());
+            var query = from Doctor in _context.Doctor select Doctor;
+
+            if (!string.IsNullOrEmpty(filter)) {
+                query = query.Where(x => x.name.Contains(filter.ToLower()));
+            }
+
+            var queryready = await query.Include(x => x.hospital).ToListAsync();
+            
+            var viewModel = new DoctorViewModel();
+            viewModel.doctors = queryready;
+
+            return View(viewModel);
         }
 
         // GET: Doctor/Details/5
