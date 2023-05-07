@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Hospitales.Data;
 using parcial1_hospitales.Models;
+using parcial1_hospitales.ViewModels;
 
 namespace Hospitales.Controllers
 {
@@ -20,12 +21,21 @@ namespace Hospitales.Controllers
         }
 
         // GET: Hospital
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? filter)
         {
-            var model = await _context.Hospital.Include(x => x.Doctors).ToListAsync();
+            var query = from Hospital in _context.Hospital select Hospital;
+
+            if (!string.IsNullOrEmpty(filter)) {
+                query = query.Where(x => x.name.Contains(filter.ToLower()));
+            }
+
+            var queryready = await query.Include(x => x.Doctors).ToListAsync();
             
+            var viewModel = new HospitalViewModel();
+            viewModel.hospitals = queryready;
+
             return _context.Hospital != null ? 
-                          View(model) :
+                          View(viewModel) :
                           Problem("Entity set 'HospitalesContext.Hospital'  is null.");
         }
 
