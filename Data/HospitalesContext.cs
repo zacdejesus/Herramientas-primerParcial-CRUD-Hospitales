@@ -24,7 +24,8 @@ namespace Hospitales.Data
             modelBuilder.Entity<Hospital>()
             .HasMany(p=> p.Doctors)
             .WithOne(p=> p.hospital)
-            .HasForeignKey(p => p.hospitalId);
+            .HasForeignKey(p => p.hospitalId)
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
