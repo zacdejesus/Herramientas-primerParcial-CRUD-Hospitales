@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/z/Desktop/Hospitales/Hospitales.csproj": {}
+    "/Users/z/Desktop/ISTEA/Herramientas/Herramientas-primerParcial-CRUD-Hospitales/Hospitales.csproj": {}
   },
   "projects": {
-    "/Users/z/Desktop/Hospitales/Hospitales.csproj": {
+    "/Users/z/Desktop/ISTEA/Herramientas/Herramientas-primerParcial-CRUD-Hospitales/Hospitales.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/z/Desktop/Hospitales/Hospitales.csproj",
+        "projectUniqueName": "/Users/z/Desktop/ISTEA/Herramientas/Herramientas-primerParcial-CRUD-Hospitales/Hospitales.csproj",
         "projectName": "Hospitales",
-        "projectPath": "/Users/z/Desktop/Hospitales/Hospitales.csproj",
+        "projectPath": "/Users/z/Desktop/ISTEA/Herramientas/Herramientas-primerParcial-CRUD-Hospitales/Hospitales.csproj",
         "packagesPath": "/Users/z/.nuget/packages/",
-        "outputPath": "/Users/z/Desktop/Hospitales/obj/",
+        "outputPath": "/Users/z/Desktop/ISTEA/Herramientas/Herramientas-primerParcial-CRUD-Hospitales/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/z/.nuget/NuGet/NuGet.Config"

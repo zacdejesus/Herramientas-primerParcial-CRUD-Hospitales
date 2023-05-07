@@ -1,4 +1,6 @@
-@model IEnumerable<parcial1_hospitales.Models.Hospital>
+@using parcial1_hospitales.ViewModels;
+
+@model HospitalViewModel;
 
 @{
     ViewData["Title"] = "Index";
@@ -9,23 +11,29 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form method="get" asp-action="Index">
+    <input asp-for="filter"> </input>
+    <button type="submit">Buscar</button>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                @Html.DisplayNameFor(model => model.hospitals[0].name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.address)
+                @Html.DisplayNameFor(model => model.hospitals[0].address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Doctors)
+                @Html.DisplayNameFor(model => model.hospitals[0].Doctors)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.hospitals) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.name)
