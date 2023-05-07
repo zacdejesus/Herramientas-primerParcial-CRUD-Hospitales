@@ -1,37 +1,46 @@
-@model IEnumerable<parcial1_hospitales.Models.Doctor>
+@using parcial1_hospitales.ViewModels;
+@model DoctorViewModel;
 
 @{
     ViewData["Title"] = "Index";
 }
+
+<div style="background-color:rgba(200,200,200,0.85)">
 
 <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form method="get" asp-action="Index">
+    <input asp-for="filter"> </input>
+    <button type="submit">Buscar</button>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                @Html.DisplayNameFor(model => model.doctors[0].name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Age)
+                @Html.DisplayNameFor(model => model.doctors[0].Age)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.isAvailable)
+                @Html.DisplayNameFor(model => model.doctors[0].isAvailable)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.specialty)
+                @Html.DisplayNameFor(model => model.doctors[0].specialty)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.hospital)
+                @Html.DisplayNameFor(model => model.doctors[0].hospital)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.doctors) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.name)
@@ -57,3 +66,5 @@
 }
     </tbody>
 </table>
+
+</div>
