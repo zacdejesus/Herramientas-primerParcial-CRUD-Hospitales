@@ -4,4 +4,5 @@ public class DoctorViewModel
 {
     public List<Doctor>? doctors { get; set; }
     public string? filter { get; set; }
+    public bool isAvailable { get; set; }
 }

@@ -21,12 +21,12 @@ namespace Hospitales.Controllers
         }
 
         // GET: Doctor
-        public async Task<IActionResult> Index(string? filter)
+        public async Task<IActionResult> Index(string? filter, bool? isAvailable)
         {
             var query = from Doctor in _context.Doctor select Doctor;
 
-            if (!string.IsNullOrEmpty(filter)) {
-                query = query.Where(x => x.name.Contains(filter.ToLower()));
+            if (isAvailable != null && !string.IsNullOrEmpty(filter)) {
+                query = query.Where(x => x.isAvailable == isAvailable && x.name.ToLower().Contains(filter.ToLower()));
             }
 
             var queryready = await query.Include(x => x.hospital).ToListAsync();
