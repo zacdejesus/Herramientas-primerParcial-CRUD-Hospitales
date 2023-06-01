@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Hospitales.Data;
+using Hospitals.Data;
 using parcial1_hospitales.Models;
 using parcial1_hospitales.ViewModels;
 
-namespace Hospitales.Controllers
+namespace Hospitals.Controllers
 {
     public class HospitalController : Controller
     {
-        private readonly HospitalesContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public HospitalController(HospitalesContext context)
+        public HospitalController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -23,10 +23,10 @@ namespace Hospitales.Controllers
         // GET: Hospital
         public async Task<IActionResult> Index(string? filter)
         {
-            var query = from Hospital in _context.Hospital select Hospital;
+             var query = from Hospital in _context.Hospitals select Hospital;
 
             if (!string.IsNullOrEmpty(filter)) {
-                query = query.Where(x => x.name.Contains(filter.ToLower()));
+                query = query.Where(x => x.Name.Contains(filter.ToLower()));
             }
 
             var queryready = await query.Include(x => x.Doctors).ToListAsync();
@@ -34,7 +34,7 @@ namespace Hospitales.Controllers
             var viewModel = new HospitalViewModel();
             viewModel.hospitals = queryready;
 
-            return _context.Hospital != null ? 
+            return _context.Hospitals != null ? 
                           View(viewModel) :
                           Problem("Entity set 'HospitalesContext.Hospital'  is null.");
         }
@@ -42,13 +42,13 @@ namespace Hospitales.Controllers
         // GET: Hospital/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Hospital == null)
+            if (id == null || _context.Hospitals == null)
             {
                 return NotFound();
             }
 
-            var hospital = await _context.Hospital
-                .FirstOrDefaultAsync(m => m.id == id);
+            var hospital = await _context.Hospitals
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (hospital == null)
             {
                 return NotFound();
@@ -68,7 +68,7 @@ namespace Hospitales.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,name,address")] Hospital hospital)
+        public async Task<IActionResult> Create([Bind("Id,Name,Address")] Hospital hospital)
         {
             if (ModelState.IsValid)
             {
@@ -82,12 +82,12 @@ namespace Hospitales.Controllers
         // GET: Hospital/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Hospital == null)
+            if (id == null || _context.Hospitals == null)
             {
                 return NotFound();
             }
 
-            var hospital = await _context.Hospital.FindAsync(id);
+            var hospital = await _context.Hospitals.FindAsync(id);
             if (hospital == null)
             {
                 return NotFound();
@@ -100,9 +100,9 @@ namespace Hospitales.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,address")] Hospital hospital)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address")] Hospital hospital)
         {
-            if (id != hospital.id)
+            if (id != hospital.Id)
             {
                 return NotFound();
             }
@@ -116,7 +116,7 @@ namespace Hospitales.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HospitalExists(hospital.id))
+                    if (!HospitalExists(hospital.Id))
                     {
                         return NotFound();
                     }
@@ -133,13 +133,13 @@ namespace Hospitales.Controllers
         // GET: Hospital/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Hospital == null)
+            if (id == null || _context.Hospitals == null)
             {
                 return NotFound();
             }
 
-            var hospital = await _context.Hospital
-                .FirstOrDefaultAsync(m => m.id == id);
+            var hospital = await _context.Hospitals
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (hospital == null)
             {
                 return NotFound();
@@ -153,14 +153,14 @@ namespace Hospitales.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Hospital == null)
+            if (_context.Hospitals == null)
             {
-                return Problem("Entity set 'HospitalesContext.Hospital'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Hospitals'  is null.");
             }
-            var hospital = await _context.Hospital.FindAsync(id);
+            var hospital = await _context.Hospitals.FindAsync(id);
             if (hospital != null)
             {
-                _context.Hospital.Remove(hospital);
+                _context.Hospitals.Remove(hospital);
             }
             
             await _context.SaveChangesAsync();
@@ -169,7 +169,7 @@ namespace Hospitales.Controllers
 
         private bool HospitalExists(int id)
         {
-          return (_context.Hospital?.Any(e => e.id == id)).GetValueOrDefault();
+          return (_context.Hospitals?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

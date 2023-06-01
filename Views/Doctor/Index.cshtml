@@ -5,41 +5,28 @@
     ViewData["Title"] = "Index";
 }
 
-<div style="background-color:rgba(200,200,200,0.85)">
-
 <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-
-<form method="get" asp-action="Index">
-    <input asp-for="filter"> </input>
-    <br>
-    <label for="checkbox">Buscar por disponibles:</label>
-    <input asp-for="isAvailable" type="checkbox">
-    <br>
-    <button type="submit">Buscar</button>
-</form>
-
-
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.doctors[0].name)
+                @Html.DisplayNameFor(model => model.doctors[0].Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.doctors[0].Age)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.doctors[0].isAvailable)
+                @Html.DisplayNameFor(model => model.doctors[0].IsAvailable)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.doctors[0].specialty)
+                @Html.DisplayNameFor(model => model.doctors[0].Specialty)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.doctors[0].hospital)
+                @Html.DisplayNameFor(model => model.doctors[0].Hospital)
             </th>
             <th></th>
         </tr>
@@ -48,28 +35,26 @@
 @foreach (var item in Model.doctors) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.name)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Age)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.isAvailable)
+                @Html.DisplayFor(modelItem => item.IsAvailable)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.specialty)
+                @Html.DisplayFor(modelItem => item.Specialty)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.hospital.id)
+                @Html.DisplayFor(modelItem => item.Hospital.Id)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
-
-</div>
