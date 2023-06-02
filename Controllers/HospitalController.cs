@@ -8,35 +8,31 @@ using Microsoft.EntityFrameworkCore;
 using Hospitals.Data;
 using parcial1_hospitales.Models;
 using parcial1_hospitales.ViewModels;
+using parcial1_hospitales.Services;
 
 namespace Hospitals.Controllers
 {
     public class HospitalController : Controller
     {
-        private readonly ApplicationDbContext _context;
 
-        public HospitalController(ApplicationDbContext context)
+        private IHospitalService _hostpitalService;
+        private readonly ApplicationDbContext? _context;
+
+        public HospitalController(IHospitalService hospitalService)
         {
-            _context = context;
+            _hostpitalService = hospitalService;
         }
 
         // GET: Hospital
         public async Task<IActionResult> Index(string? filter)
         {
-             var query = from Hospital in _context.Hospitals select Hospital;
 
-            if (!string.IsNullOrEmpty(filter)) {
-                query = query.Where(x => x.Name.Contains(filter.ToLower()));
-            }
-
-            var queryready = await query.Include(x => x.Doctors).ToListAsync();
+            var queryready = _hostpitalService.GetAll(filter);
             
             var viewModel = new HospitalViewModel();
             viewModel.hospitals = queryready;
 
-            return _context.Hospitals != null ? 
-                          View(viewModel) :
-                          Problem("Entity set 'HospitalesContext.Hospital'  is null.");
+            return View(viewModel);
         }
 
         // GET: Hospital/Details/5
