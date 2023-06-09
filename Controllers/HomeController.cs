@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Hospitals.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hospitals.Controllers;
 
@@ -18,6 +19,7 @@ public class HomeController : Controller
         return View();
     }
 
+    [Authorize(Roles = "Admin")]
     public IActionResult Privacy()
     {
         return View();
