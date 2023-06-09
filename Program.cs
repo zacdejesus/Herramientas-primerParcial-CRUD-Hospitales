@@ -19,6 +19,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>()
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IHospitalService, HospitalService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<IPatientService, PatientService>();
 
 var app = builder.Build();
 

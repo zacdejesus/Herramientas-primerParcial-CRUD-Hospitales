@@ -1,9 +1,9 @@
 using parcial1_hospitales.Models;
 
 namespace parcial1_hospitales.ViewModels;
-public class HospitalViewModel
+public class AppointmentViewModel
 {
-    public List<Hospital>? hospitals { get; set; }
+    public List<Appointment>? appointments { get; set; }
     public string? filter { get; set; }
     public bool isAvailable { get; set; }
 }

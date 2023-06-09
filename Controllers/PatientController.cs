@@ -1,42 +1,41 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Hospitals.Data;
 using parcial1_hospitales.Models;
+using parcial1_hospitales.Services;
+using parcial1_hospitales.ViewModels;
 
 namespace Hospitals.Controllers
 {
     public class PatientController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IPatientService _patientService;
 
-        public PatientController(ApplicationDbContext context)
+        public PatientController(IPatientService patientService)
         {
-            _context = context;
+            _patientService = patientService;
         }
 
         // GET: Patient
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? filter)
         {
-              return _context.Patients != null ? 
-                          View(await _context.Patients.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Patients'  is null.");
+            var patients = _patientService.GetAll(filter);
+
+            var viewModel = new PatientViewModel();
+            viewModel.patients = patients;
+
+            return View(viewModel);
         }
 
         // GET: Patient/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Patients == null)
+            if (id == null || _patientService.getContext().Patients == null)
             {
                 return NotFound();
             }
 
-            var patient = await _context.Patients
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var patient = await _patientService.GetById(id);
             if (patient == null)
             {
                 return NotFound();
@@ -59,8 +58,7 @@ namespace Hospitals.Controllers
         public async Task<IActionResult> Create([Bind("Id,Name,Age")] Patient patient)
         {
            
-                _context.Add(patient);
-                await _context.SaveChangesAsync();
+                _patientService.Create(patient);
                 return RedirectToAction(nameof(Index));
             
         }
@@ -68,12 +66,12 @@ namespace Hospitals.Controllers
         // GET: Patient/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Patients == null)
+            if (id == null || _patientService.getContext().Patients == null)
             {
                 return NotFound();
             }
 
-            var patient = await _context.Patients.FindAsync(id);
+            var patient = await _patientService.GetById(id);
             if (patient == null)
             {
                 return NotFound();
@@ -93,38 +91,19 @@ namespace Hospitals.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(patient);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PatientExists(patient.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(patient);
+             _patientService.Update(patient,id);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Patient/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Patients == null)
+            if (id == null || _patientService.getContext().Patients == null)
             {
                 return NotFound();
             }
 
-            var patient = await _context.Patients
+            var patient = await _patientService.getContext().Patients
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (patient == null)
             {
@@ -139,23 +118,24 @@ namespace Hospitals.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Patients == null)
+            if (_patientService.getContext().Patients == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Patients'  is null.");
             }
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient != null)
+
+            var partient = await _patientService.GetById(id);
+            if (partient != null)
             {
-                _context.Patients.Remove(patient);
+                _patientService.Delete(partient);
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PatientExists(int id)
         {
-          return (_context.Patients?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_patientService.getContext().Patients?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
     }
 }

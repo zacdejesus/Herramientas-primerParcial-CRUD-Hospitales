@@ -1,0 +1,31 @@
+@model parcial1_hospitales.ViewModels.PatientsDeleteAllApointmentsViewModel
+
+@{
+    ViewData["Title"] = "Citas";
+}
+
+<h1>Borra todas las citas del paciente</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="DeleteAllPatientAppointments">
+            <div class="form-group">
+                <label class="control-label">Paciente</label>
+                <select asp-for="PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select>
+            </div>
+            <br/>
+            <div class="form-group">
+                <input type="submit" value="Borrar citas" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br/>
+<div>
+    <a asp-action="Index">Vuelve a las citas</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

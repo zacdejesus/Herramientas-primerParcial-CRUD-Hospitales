@@ -1,56 +1,49 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Hospitals.Data;
 using parcial1_hospitales.Models;
+using parcial1_hospitales.Services;
+using parcial1_hospitales.ViewModels;
 
 namespace Hospitals.Controllers
 {
     public class AppointmentController : Controller
     {
-        private readonly ApplicationDbContext _context;
 
-        public AppointmentController(ApplicationDbContext context)
+        private IAppointmentService _appointmentService;
+
+        public AppointmentController(IAppointmentService appointmentService)
         {
-            _context = context;
+            _appointmentService = appointmentService;
         }
 
         // GET: Appointment
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? filter)
         {
-            var applicationDbContext = _context.Appointments.Include(a => a.Doctor).Include(a => a.Patient);
-            return View(await applicationDbContext.ToListAsync());
+            
+            var appointments = _appointmentService.GetAll(filter);
+
+            var viewModel = new AppointmentViewModel();
+            viewModel.appointments = appointments;
+
+            return View(viewModel);
         }
+
 
         // GET: Appointment/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Appointments == null)
-            {
-                return NotFound();
-            }
 
-            var appointment = await _context.Appointments
-                .Include(a => a.Doctor)
-                .Include(a => a.Patient)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
-
-            return View(appointment);
+            var appo = await _appointmentService.GetById(id);
+            return View(appo);
         }
 
         // GET: Appointment/Create
         public IActionResult Create()
         {
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Id");
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id");
+            ViewData["DoctorId"] = new SelectList(_appointmentService.getContext().Doctors, "Id", "Id");
+            ViewData["PatientId"] = new SelectList(_appointmentService.getContext().Patients, "Id", "Id");
             return View();
         }
 
@@ -61,26 +54,25 @@ namespace Hospitals.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Description,DoctorId,PatientId")] Appointment appointment)
         {
-            _context.Add(appointment);
-            await _context.SaveChangesAsync();
+            _appointmentService.Create(appointment);
             return RedirectToAction(nameof(Index));
         }
 
         // GET: Appointment/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Appointments == null)
+            if (id == null || _appointmentService.getContext().Appointments == null)
             {
                 return NotFound();
             }
 
-            var appointment = await _context.Appointments.FindAsync(id);
+            var appointment = await _appointmentService.GetById(id);
             if (appointment == null)
             {
                 return NotFound();
             }
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Id", appointment.DoctorId);
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", appointment.PatientId);
+            ViewData["DoctorId"] = new SelectList(_appointmentService.getContext().Doctors, "Id", "Id", appointment.DoctorId);
+            ViewData["PatientId"] = new SelectList(_appointmentService.getContext().Patients, "Id", "Id", appointment.PatientId);
             return View(appointment);
         }
 
@@ -96,43 +88,21 @@ namespace Hospitals.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(appointment);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AppointmentExists(appointment.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Id", appointment.DoctorId);
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", appointment.PatientId);
-            return View(appointment);
+            _appointmentService.Update(appointment,id);
+            return RedirectToAction(nameof(Index));
+            
         }
 
         // GET: Appointment/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Appointments == null)
+            if (id == null || _appointmentService.getContext().Appointments == null)
             {
                 return NotFound();
             }
 
-            var appointment = await _context.Appointments
-                .Include(a => a.Doctor)
-                .Include(a => a.Patient)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var appointment = await _appointmentService.GetById(id);
+
             if (appointment == null)
             {
                 return NotFound();
@@ -146,23 +116,40 @@ namespace Hospitals.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Appointments == null)
+            if (_appointmentService.getContext().Appointments == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Appointments'  is null.");
             }
-            var appointment = await _context.Appointments.FindAsync(id);
+
+            var appointment = await _appointmentService.GetById(id);
             if (appointment != null)
             {
-                _context.Appointments.Remove(appointment);
+                _appointmentService.Delete(appointment);
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AppointmentExists(int id)
         {
-          return (_context.Appointments?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_appointmentService.getContext().Appointments?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        
+
+        public IActionResult DeleteAllPatientAppointments() {
+
+            ViewData["PatientId"] = new SelectList(_appointmentService.getContext().Patients.Where(a => a.Appointments.Count != 0), "Id", "Name");
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteAllPatientAppointments(PatientsDeleteAllApointmentsViewModel model) {
+            
+            _appointmentService.DeleteAllAppointmentsByPatientId(model.PatientId);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

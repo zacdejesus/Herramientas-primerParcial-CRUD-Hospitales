@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Hospitals.Data;
 using parcial1_hospitales.Models;
@@ -16,7 +11,6 @@ namespace Hospitals.Controllers
     {
 
         private IHospitalService _hostpitalService;
-        private readonly ApplicationDbContext? _context;
 
         public HospitalController(IHospitalService hospitalService)
         {
@@ -26,7 +20,6 @@ namespace Hospitals.Controllers
         // GET: Hospital
         public async Task<IActionResult> Index(string? filter)
         {
-
             var queryready = _hostpitalService.GetAll(filter);
             
             var viewModel = new HospitalViewModel();
@@ -38,19 +31,8 @@ namespace Hospitals.Controllers
         // GET: Hospital/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Hospitals == null)
-            {
-                return NotFound();
-            }
-
-            var hospital = await _context.Hospitals
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (hospital == null)
-            {
-                return NotFound();
-            }
-
-            return View(hospital);
+            var hospital = _hostpitalService.GetById(id);
+            return View(await hospital);
         }
 
         // GET: Hospital/Create
@@ -68,8 +50,7 @@ namespace Hospitals.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(hospital);
-                await _context.SaveChangesAsync();
+                _hostpitalService.Create(hospital);
                 return RedirectToAction(nameof(Index));
             }
             return View(hospital);
@@ -78,16 +59,8 @@ namespace Hospitals.Controllers
         // GET: Hospital/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Hospitals == null)
-            {
-                return NotFound();
-            }
-
-            var hospital = await _context.Hospitals.FindAsync(id);
-            if (hospital == null)
-            {
-                return NotFound();
-            }
+            var hospital = await _hostpitalService.GetById(id);
+     
             return View(hospital);
         }
 
@@ -105,37 +78,18 @@ namespace Hospitals.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(hospital);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!HospitalExists(hospital.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _hostpitalService.Update(hospital,id);
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(hospital);
         }
 
         // GET: Hospital/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Hospitals == null)
-            {
-                return NotFound();
-            }
 
-            var hospital = await _context.Hospitals
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var hospital = await _hostpitalService.GetById(id);
             if (hospital == null)
             {
                 return NotFound();
@@ -149,23 +103,13 @@ namespace Hospitals.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Hospitals == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Hospitals'  is null.");
-            }
-            var hospital = await _context.Hospitals.FindAsync(id);
+            var hospital = await _hostpitalService.GetById(id);
             if (hospital != null)
             {
-                _context.Hospitals.Remove(hospital);
+                _hostpitalService.Delete(hospital);
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool HospitalExists(int id)
-        {
-          return (_context.Hospitals?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

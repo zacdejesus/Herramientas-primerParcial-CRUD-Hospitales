@@ -2,14 +2,30 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="container text-center">
     <h1 class="display-4">Welcome</h1>
-    <br>
-    <a href="/Hospital"> Ir a Hospitales </a>
-    <br>
-    <a href="/Patient"> Ir a Pacientes </a>
-    <br>
-    <a href="/Appointment"> Ir a citas </a>
-    <br>
-    <a href="/Doctor"> Ir a Doctores </a>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Explore the Application</h5>
+                    <p class="card-text">Choose a section to navigate:</p>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="@Url.Action("Index", "Hospital")" class="card-link">Hospitals</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="@Url.Action("Index", "Patient")" class="card-link">Patients</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="@Url.Action("Index", "Appointment")" class="card-link">Appointments</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="@Url.Action("Index", "Doctor")" class="card-link">Doctors</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

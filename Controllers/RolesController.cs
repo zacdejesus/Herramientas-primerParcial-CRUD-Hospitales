@@ -2,23 +2,23 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Hospitals.Models;
 using Microsoft.AspNetCore.Identity;
+using parcial1_hospitales.Services;
 
 namespace Hospitals.Controllers;
 
 public class RolesController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public RolesController(ILogger<HomeController> logger,  RoleManager<IdentityRole> roleManager)
+    private IRolesService _roleService;
+
+    public RolesController(IRolesService service)
     {
-        _logger = logger;
-        _roleManager = roleManager;
+        _roleService = service;
     }
 
     public IActionResult Index()
     {
-        var users = _roleManager.Roles.ToList();
+        var users = _roleService.GetAll();
         return View(users);
     }
 
@@ -31,11 +31,10 @@ public class RolesController : Controller
     public IActionResult Create(string roleName)
     {
         if (!string.IsNullOrEmpty(roleName)) {
-            var roleExists = _roleManager.RoleExistsAsync(roleName).Result;
+            var roleExists = _roleService.roleExists(roleName);
             if (!roleExists)
             {
-                var role = new IdentityRole(roleName);
-                _roleManager.CreateAsync(role);
+                _roleService.create(roleName);
             }
         }
         return RedirectToAction("Index");

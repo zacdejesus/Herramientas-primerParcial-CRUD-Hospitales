@@ -2,23 +2,23 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Hospitals.Models;
 using Microsoft.AspNetCore.Identity;
+using parcial1_hospitales.Services;
 
 namespace Hospitals.Controllers;
 
 public class UsersController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-    private readonly UserManager<IdentityUser> _userManager;
+    
+    private IUsersService _userService;
 
-    public UsersController(ILogger<HomeController> logger,  UserManager<IdentityUser> userManager)
+    public UsersController(IUsersService userService)
     {
-        _logger = logger;
-        _userManager = userManager;
+        _userService = userService;
     }
 
     public IActionResult Index()
     {
-        var users = _userManager.Users.ToList();
+        var users = _userService.GetAll();
         return View(users);
     }
 }

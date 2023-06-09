@@ -28,6 +28,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXBwb2ludG1lbnQvRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/z/Desktop/Hospitals/Views/Appointment/DeleteAllPatientAppointments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXBwb2ludG1lbnQvRGVsZXRlQWxsUGF0aWVudEFwcG9pbnRtZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/z/Desktop/Hospitals/Views/Appointment/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXBwb2ludG1lbnQvRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

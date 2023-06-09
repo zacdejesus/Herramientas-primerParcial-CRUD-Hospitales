@@ -3,11 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using Hospitals.Data;
 using parcial1_hospitales.Models;
-using parcial1_hospitales.ViewModels;
 
 public class HospitalService : IHospitalService
 {
-
     private readonly ApplicationDbContext _context;
 
     public HospitalService(ApplicationDbContext context)
@@ -15,35 +13,47 @@ public class HospitalService : IHospitalService
         _context = context;
     }
 
+    public ApplicationDbContext getContext()
+    {
+        return _context;
+    }
+
     public void Create(Hospital obj)
     {
-        throw new NotImplementedException();
+        _context.Add(obj);
+        _context.SaveChangesAsync();
     }
 
     public List<Hospital> GetAll(string? filter)
     {
-        var query = from Hospital in _context.Hospitals select Hospital;
 
         if (!string.IsNullOrEmpty(filter))
         {
-            query = query.Where(x => x.Name.Contains(filter.ToLower()));
+            return _context.Hospitals
+                .Include(a => a.Doctors)
+                .Where(a => a.Name.Contains(filter.ToLower()) || a.Address.Contains(filter.ToLower())).ToList();
         }
 
-        return query.Include(x => x.Doctors).ToList();
+        return _context.Hospitals
+               .Include(a => a.Doctors).ToList();
     }
 
     public void Update(Hospital obj, int id)
     {
-        throw new NotImplementedException();
+        _context.Update(obj);
+        _context.SaveChangesAsync();
     }
 
-    public void Delete(Hospital obj)
+    public void Delete(Hospital hospital)
     {
-        throw new NotImplementedException();
+        _context.Hospitals.Remove(hospital);
+        _context.SaveChangesAsync();
     }
 
-    public Hospital GetById(int id)
+    public async Task<Hospital?> GetById(int? id)
     {
-        throw new NotImplementedException();
+        var hospitalTask = await _context.Hospitals.FirstOrDefaultAsync(m => m.Id == id);
+
+        return hospitalTask;
     }
 }

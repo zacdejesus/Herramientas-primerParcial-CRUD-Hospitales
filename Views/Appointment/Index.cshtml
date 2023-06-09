@@ -1,10 +1,25 @@
-@model IEnumerable<parcial1_hospitales.Models.Appointment>
+@using parcial1_hospitales.ViewModels;
+
+@model AppointmentViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
+
+<form method="get" asp-action="Index">
+    <input asp-for="filter"> </input>
+    <br>
+    <label for="checkbox">Buscar por descripcion:</label>
+    <br>
+    <button type="submit">Buscar</button>
+</form>
+
+
+<form method="get" asp-action="DeleteAllPatientAppointments">
+    <button type="submit">Borrar todas las citas de un paciente</button>
+</form>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,19 +28,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.appointments[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Doctor)
+                @Html.DisplayNameFor(model => model.appointments[0].Doctor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Patient)
+                @Html.DisplayNameFor(model => model.appointments[0].Patient)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.appointments) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
