@@ -12,13 +12,14 @@ junior@g.com	-> rol junior
 contraseña para todos los users
 Secure1234$
 
-Se deben crear un paciente, un doctor y un hospital minimamente para poder crear una cita
-
 Se agrego como funcionalidad extra de negocio la posibilidad de borrar todas las citas de un paciente.
 
 # how to run
 
-abrir una terminal sobre en la raiz del proyectl y correr `dotnet run`
+abrir una terminal sobre en la raiz del proyecto y correr `dotnet run`
+
+
+Se deben crear un paciente, un doctor y un hospital minimamente para poder crear una cita
 
 Se realizara con MVC .net core con sqltlite con db.
 
