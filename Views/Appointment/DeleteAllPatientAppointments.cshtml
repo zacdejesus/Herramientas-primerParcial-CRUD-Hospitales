@@ -4,28 +4,84 @@
     ViewData["Title"] = "Citas";
 }
 
-<h1>Borra todas las citas del paciente</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+        }
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="DeleteAllPatientAppointments">
-            <div class="form-group">
-                <label class="control-label">Paciente</label>
-                <select asp-for="PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select>
-            </div>
-            <br/>
-            <div class="form-group">
-                <input type="submit" value="Borrar citas" class="btn btn-primary" />
-            </div>
-        </form>
+        h1 {
+            color: #2779bd;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        select,
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #2779bd;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #185b8c;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #2779bd;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Borra todas las citas del paciente</h1>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="DeleteAllPatientAppointments">
+                <div class="form-group">
+                    <label class="control-label">Paciente</label>
+                    <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <input type="submit" value="Borrar citas" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<br/>
-<div>
-    <a asp-action="Index">Vuelve a las citas</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <br/>
+    <div>
+        <a asp-action="Index">Vuelve a las citas</a>
+    </div>
+</body>
+</html>

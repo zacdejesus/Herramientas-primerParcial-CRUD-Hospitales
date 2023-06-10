@@ -5,7 +5,7 @@ using Hospitals.Data;
 
 public interface IDoctorService {
     void Create(Doctor obj);
-    List<Doctor> GetAll(string? filter);
+    List<Doctor> GetAll(string? filter, bool? isAvailable);
     void Update(Doctor obj, int id);
     void Delete(Doctor obj);
     Task<Doctor?> GetById(int? id);

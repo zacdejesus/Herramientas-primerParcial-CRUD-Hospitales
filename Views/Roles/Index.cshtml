@@ -1,11 +1,44 @@
 @using Microsoft.AspNetCore.Identity
 @model List<IdentityRole>
 
-<h3> Users </h3>
+<h3 class="text-primary">Roles de Usuario</h3>
 
-<ul>
+<ul class="list-group">
     @foreach (var item in Model)
     {
-        <li>@item.Name</li>
+        <li class="list-group-item">@item.Name</li>
     }
 </ul>
+
+<a href="@Url.Action("Create", "Roles")" class="btn btn-primary mt-3">Crear Rol</a>
+
+<style>
+    .text-primary {
+        color: #007bff;
+    }
+
+    .list-group {
+        max-width: 300px;
+        margin-top: 20px;
+    }
+
+    .list-group-item {
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+        color: #333;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+    }
+
+    .mt-3 {
+        margin-top: 1rem;
+    }
+</style>

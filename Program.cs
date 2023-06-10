@@ -17,8 +17,6 @@ builder.Services.AddDefaultIdentity<IdentityUser>()
 
 builder.Services.AddControllersWithViews();
 
-
-
 builder.Services.AddScoped<IHospitalService, HospitalService>();
 builder.Services.AddScoped<IRolesService, RolesService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
@@ -46,11 +44,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Appointment}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

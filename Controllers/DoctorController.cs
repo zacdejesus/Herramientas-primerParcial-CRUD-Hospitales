@@ -9,6 +9,7 @@ using Hospitals.Data;
 using parcial1_hospitales.Models;
 using parcial1_hospitales.ViewModels;
 using parcial1_hospitales.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hospitals.Controllers
 {
@@ -23,19 +24,20 @@ namespace Hospitals.Controllers
         }
 
         // GET: Doctor
+        [Authorize]
         public async Task<IActionResult> Index(string? filter, bool? isAvailable)
         {
 
-            var queryready = _doctorService.GetAll(filter);
+            var doctors = _doctorService.GetAll(filter, isAvailable);
 
             var viewModel = new DoctorViewModel();
-            viewModel.doctors = queryready;
+            viewModel.doctors = doctors;
 
             return View(viewModel);
         }
-
-
+        
         // GET: Doctor/Details/5
+        [Authorize(Roles = "senior,semisenior,junior")]
         public async Task<IActionResult> Details(int? id)
         {
             var doctor = await _doctorService.GetById(id);
@@ -43,6 +45,7 @@ namespace Hospitals.Controllers
         }
 
         // GET: Doctor/Create
+        [Authorize(Roles = "senior,semisenior")]
         public IActionResult Create()
         {
             ViewData["HospitalId"] = new SelectList(_doctorService.getContext().Hospitals, "Id", "Id");
@@ -61,6 +64,7 @@ namespace Hospitals.Controllers
         }
 
         // GET: Doctor/Edit/5
+        [Authorize(Roles = "senior,semisenior,junior")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _doctorService.getContext().Doctors == null)
@@ -82,6 +86,7 @@ namespace Hospitals.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "senior,semisenior,junior")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Age,IsAvailable,Specialty,HospitalId")] Doctor doctor)
         {
             if (id != doctor.Id)
@@ -94,6 +99,7 @@ namespace Hospitals.Controllers
         }
 
         // GET: Doctor/Delete/5
+        [Authorize(Roles = "senior")]
         public async Task<IActionResult> Delete(int? id)
         {
             var doctor = await _doctorService.GetById(id);
@@ -108,6 +114,7 @@ namespace Hospitals.Controllers
         // POST: Doctor/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "senior")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var doctor = await _doctorService.GetById(id);

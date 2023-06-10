@@ -25,6 +25,7 @@ public class UsersController : Controller
         _roleManager = roleManager;
     }
 
+    [Authorize]
     public IActionResult Index()
     {
         //listar todos los usuarios
@@ -32,10 +33,11 @@ public class UsersController : Controller
         return View(users);
     }
 
+    [Authorize(Roles = "senior")]
     public async Task<IActionResult> Edit(string id)
     {
         var user = await _userManager.FindByIdAsync(id);
-        
+
         var userViewModel = new UserEditViewModel();
         userViewModel.UserName = user.UserName ?? string.Empty;
         userViewModel.Email = user.Email ?? string.Empty;
@@ -44,26 +46,30 @@ public class UsersController : Controller
         return View(userViewModel);
     }
 
-[HttpPost]
-public async Task<IActionResult> Edit(UserEditViewModel model)
-{
-    var user = await _userManager.FindByNameAsync(model.UserName);
-    
-    if (user != null)
+    [HttpPost]
+    [Authorize(Roles = "senior")]
+    public async Task<IActionResult> Edit(UserEditViewModel model)
     {
-        if (model.Role == null)
+        var user = await _userManager.FindByNameAsync(model.UserName);
+
+        if (user != null)
         {
-            Console.WriteLine("model.Role is null");
+            if (model.Role == null)
+            {
+                Console.WriteLine("model.Role is null");
+            }
+
+            await _userManager.AddToRoleAsync(user, model.Role);
+        }
+        else
+        {
+            Console.WriteLine("user is null");
         }
 
-        await _userManager.AddToRoleAsync(user, model.Role);
-    }
-    else
-    {
-        Console.WriteLine("user is null");
-    }
+        var roles = await _userManager.GetRolesAsync(user);
 
-    return RedirectToAction("Index");
-}
+
+        return RedirectToAction("Index");
+    }
 
 }

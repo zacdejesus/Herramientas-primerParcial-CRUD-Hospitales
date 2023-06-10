@@ -5,6 +5,7 @@ using Hospitals.Data;
 using parcial1_hospitales.Models;
 using parcial1_hospitales.Services;
 using parcial1_hospitales.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hospitals.Controllers
 {
@@ -19,6 +20,7 @@ namespace Hospitals.Controllers
         }
 
         // GET: Appointment
+        [Authorize]
         public async Task<IActionResult> Index(string? filter)
         {
             
@@ -30,7 +32,7 @@ namespace Hospitals.Controllers
             return View(viewModel);
         }
 
-
+        [Authorize(Roles = "senior,semisenior,junior")]
         // GET: Appointment/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -39,6 +41,7 @@ namespace Hospitals.Controllers
             return View(appo);
         }
 
+        [Authorize(Roles = "senior,semisenior")]
         // GET: Appointment/Create
         public IActionResult Create()
         {
@@ -52,12 +55,13 @@ namespace Hospitals.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "senior,semisenior")]
         public async Task<IActionResult> Create([Bind("Id,Description,DoctorId,PatientId")] Appointment appointment)
         {
             _appointmentService.Create(appointment);
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = "senior,semisenior,junior")]
         // GET: Appointment/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -81,6 +85,7 @@ namespace Hospitals.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "senior,semisenior,junior")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Description,DoctorId,PatientId")] Appointment appointment)
         {
             if (id != appointment.Id)
@@ -93,7 +98,8 @@ namespace Hospitals.Controllers
             
         }
 
-        // GET: Appointment/Delete/5
+        // GET: Appointment/Delete/5\
+        [Authorize(Roles = "senior")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _appointmentService.getContext().Appointments == null)
@@ -114,6 +120,7 @@ namespace Hospitals.Controllers
         // POST: Appointment/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "senior")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_appointmentService.getContext().Appointments == null)
@@ -135,8 +142,7 @@ namespace Hospitals.Controllers
           return (_appointmentService.getContext().Appointments?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        
-
+        [Authorize(Roles = "senior")]
         public IActionResult DeleteAllPatientAppointments() {
 
             ViewData["PatientId"] = new SelectList(_appointmentService.getContext().Patients.Where(a => a.Appointments.Count != 0), "Id", "Name");
@@ -146,6 +152,7 @@ namespace Hospitals.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "senior")]
         public IActionResult DeleteAllPatientAppointments(PatientsDeleteAllApointmentsViewModel model) {
             
             _appointmentService.DeleteAllAppointmentsByPatientId(model.PatientId);

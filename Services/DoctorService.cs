@@ -25,16 +25,22 @@ public class DoctorService : IDoctorService
         _context.SaveChangesAsync();
     }
 
-    public List<Doctor> GetAll(string? filter)
+    public List<Doctor> GetAll(string? filter, bool? isAvailable)
     {
         var query = from Doctor in _context.Doctors select Doctor;
 
-        if (!string.IsNullOrEmpty(filter))
+        if (isAvailable != null)
         {
-            query = query.Where(x => x.Name.Contains(filter.ToLower()));
+            query = query.Where(x => x.IsAvailable == isAvailable);
         }
 
-        return query.Include(x => x.Hospital).ToList();
+        if (!string.IsNullOrEmpty(filter))
+        {
+            query = query.Where(x => x.Name.ToLower().Contains(filter.ToLower()));
+        }
+
+        var queryready = query.Include(x => x.Hospital).ToList();
+        return queryready;
     }
 
     public void Update(Doctor obj, int id)

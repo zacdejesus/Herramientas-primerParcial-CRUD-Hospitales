@@ -14,12 +14,19 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [Authorize]
     public IActionResult Index()
     {
+        if (User.IsInRole("coso") || User.IsInRole("COSO"))
+        {
+            // User is in the "admin" or "ADMIN" role
+            return View();
+        }
+
         return View();
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public IActionResult Privacy()
     {
         return View();

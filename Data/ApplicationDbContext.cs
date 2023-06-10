@@ -35,14 +35,7 @@ public class ApplicationDbContext : IdentityDbContext
             .WithOne(p=> p.Hospital)
             .HasForeignKey(p => p.HospitalId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<IdentityUserLogin<string>>()
-            .HasNoKey();
-
-        modelBuilder.Entity<IdentityUserRole<string>>()
-            .HasNoKey();
         
-        modelBuilder.Entity<IdentityUserToken<string>>()
-            .HasNoKey();
-        }
+        base.OnModelCreating(modelBuilder);
+    }
 }

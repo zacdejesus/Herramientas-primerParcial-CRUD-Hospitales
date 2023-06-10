@@ -1,15 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="container text-center">
-    <h1 class="display-4">Welcome</h1>
+﻿<div class="container text-center">
+    <h1 class="display-4">Sistema de cita de hospitales</h1>
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card mt-4">
                 <div class="card-body">
-                    <h5 class="card-title">Explore the Application</h5>
-                    <p class="card-text">Choose a section to navigate:</p>
+                    <p class="card-text">Realiza tu consulta</p>
                     <ul class="list-group">
                         <li class="list-group-item">
                             <a href="@Url.Action("Index", "Hospital")" class="card-link">Hospitals</a>
@@ -24,10 +19,10 @@
                             <a href="@Url.Action("Index", "Doctor")" class="card-link">Doctors</a>
                         </li>
                         <li class="list-group-item">
-                            <a href="@Url.Action("Index", "Users")" class="card-link">Usuarios</a>
+                            <a href="@Url.Action("Index", "Users")" class="card-link">Users</a>
                         </li>
                         <li class="list-group-item">
-                            <a href="@Url.Action("Index", "Roles")" class="card-link">roles</a>
+                            <a href="@Url.Action("Index", "Roles")" class="card-link">Roles</a>
                         </li>
                     </ul>
                 </div>
@@ -35,3 +30,59 @@
         </div>
     </div>
 </div>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+
+    .display-4 {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .list-group-item {
+        border: 1px solid rgba(204, 204, 204, 0.5);; /* Add a gray border */
+        border-radius: 4px;
+        background-color: transparent;
+        padding: 5px;
+        padding: 10px; /* Add space between the buttons and the border */
+        margin-bottom: 10px; /
+    }
+
+    .card-link {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .card-link:hover {
+        text-decoration: underline;
+    }
+
+    .list-group-item a {
+        display: block;
+        padding: 10px 15px;
+        color: #333;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .list-group-item a:hover {
+        background-color: #f7f7f7;
+    }
+</style>

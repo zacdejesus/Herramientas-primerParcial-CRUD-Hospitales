@@ -18,5 +18,7 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  background-image: linear-gradient(to bottom, #dde8f7, #d6e8fa);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }

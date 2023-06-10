@@ -31,7 +31,7 @@ public class HospitalService : IHospitalService
         {
             return _context.Hospitals
                 .Include(a => a.Doctors)
-                .Where(a => a.Name.Contains(filter.ToLower()) || a.Address.Contains(filter.ToLower())).ToList();
+                .Where(a => a.Name.ToLower().Contains(filter.ToLower()) || a.Address.ToLower().Contains(filter.ToLower())).ToList();
         }
 
         return _context.Hospitals
