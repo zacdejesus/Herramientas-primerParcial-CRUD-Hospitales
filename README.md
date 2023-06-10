@@ -4,7 +4,9 @@ Este proyecto trata sobre un CRUD basico para llevar el listado de especialistas
 credenciales
 
 senior@g.com -> rol senior
+
 semisenior@g.com -> rol semisenior
+
 junior@g.com	-> rol junior
 
 contraseña para todos los users
