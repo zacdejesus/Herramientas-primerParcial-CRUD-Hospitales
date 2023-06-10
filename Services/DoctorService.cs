@@ -36,7 +36,9 @@ public class DoctorService : IDoctorService
 
         if (!string.IsNullOrEmpty(filter))
         {
-            query = query.Where(x => x.Name.ToLower().Contains(filter.ToLower()));
+            query = query.Where(x => x.Name.ToLower().Contains(filter.ToLower()) 
+            || x.Age.ToString().ToLower().Contains(filter.ToLower())
+            || x.Specialty.ToLower().Contains(filter.ToLower()));
         }
 
         var queryready = query.Include(x => x.Hospital).ToList();

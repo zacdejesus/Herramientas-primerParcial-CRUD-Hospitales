@@ -93,19 +93,18 @@
     </style>
 </head>
 <body>
-    <h1>Index</h1>
+    <h1>Pacientes</h1>
 
     <form method="get" asp-action="Index">
+        <label for="checkbox">Buscar por nombre o edad:</label>
         <input asp-for="filter" type="text">
-        <br>
-        <label for="checkbox">Buscar por disponibles:</label>
         <br>
         <button type="submit">Buscar</button>
     </form>
     <br>
 
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Crear paciente nuevo</a>
     </p>
 
     <table class="table">

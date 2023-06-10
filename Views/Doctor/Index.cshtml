@@ -68,6 +68,7 @@
     <h1>Doctores disponiles</h1>
 
     <form method="get" asp-action="Index">
+        <label for="checkbox">Buscar por nombre, edad o Especialidad:</label>
         <input asp-for="filter" type="text">
         <br>
         <label for="checkbox">Buscar por disponibles:</label>
@@ -75,19 +76,19 @@
         <br>
         <button type="submit">Buscar</button>
     </form>
-
+    <br>
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Crea un nuevo doctor</a>
     </p>
 
     <table class="table">
         <thead>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.doctors[0].Name)</th>
-                <th>@Html.DisplayNameFor(model => model.doctors[0].Age)</th>
-                <th>@Html.DisplayNameFor(model => model.doctors[0].IsAvailable)</th>
-                <th>@Html.DisplayNameFor(model => model.doctors[0].Specialty)</th>
-                <th>@Html.DisplayNameFor(model => model.doctors[0].Hospital)</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Esta disponible</th>
+                <th>Especialidad</th>
+                <th>Hospital Id</th>
                 <th></th>
             </tr>
         </thead>
@@ -101,9 +102,9 @@
                     <td>@Html.DisplayFor(modelItem => item.Specialty)</td>
                     <td>@Html.DisplayFor(modelItem => item.Hospital.Id)</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
                     </td>
                 </tr>
             }
