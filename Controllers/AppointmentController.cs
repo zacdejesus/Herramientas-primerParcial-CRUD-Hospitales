@@ -45,8 +45,9 @@ namespace Hospitals.Controllers
         // GET: Appointment/Create
         public IActionResult Create()
         {
-            ViewData["DoctorId"] = new SelectList(_appointmentService.getContext().Doctors, "Id", "Id");
-            ViewData["PatientId"] = new SelectList(_appointmentService.getContext().Patients, "Id", "Id");
+            var availableDoctors = _appointmentService.getContext().Doctors.Where(d => d.IsAvailable);
+            ViewData["DoctorId"] = new SelectList(availableDoctors, "Id", "Name");
+            ViewData["PatientId"] = new SelectList(_appointmentService.getContext().Patients, "Id", "Name");
             return View();
         }
 
@@ -75,8 +76,9 @@ namespace Hospitals.Controllers
             {
                 return NotFound();
             }
-            ViewData["DoctorId"] = new SelectList(_appointmentService.getContext().Doctors, "Id", "Id", appointment.DoctorId);
-            ViewData["PatientId"] = new SelectList(_appointmentService.getContext().Patients, "Id", "Id", appointment.PatientId);
+             var availableDoctors = _appointmentService.getContext().Doctors.Where(d => d.IsAvailable);
+            ViewData["DoctorId"] = new SelectList(availableDoctors, "Id", "Name");
+            ViewData["PatientId"] = new SelectList(_appointmentService.getContext().Patients, "Id", "Name", appointment.PatientId);
             return View(appointment);
         }
 

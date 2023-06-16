@@ -14,25 +14,12 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f9fc;
+            margin: 0;
         }
 
         h1 {
             color: #2779bd;
-        }
-
-        form {
             margin-bottom: 20px;
-        }
-
-        input[type="text"],
-        input[type="checkbox"],
-        button {
-            padding: 8px;
-            font-size: 14px;
-            border-radius: 4px;
-            border: 1px solid #b6d4f2;
-            margin-bottom: 10px;
-            background-color: #fff;
         }
 
         label {
@@ -40,6 +27,7 @@
         }
 
         table {
+            border-collapse: collapse;
             width: 100%;
             background-color: #fff;
         }
@@ -64,6 +52,30 @@
         a:hover {
             text-decoration: underline;
         }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 200px;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #2779bd;
+            border-color: #2779bd;
+        }
+
+        button {
+            background-color: #2779bd;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -72,16 +84,17 @@
     <form method="get" asp-action="Index">
         <label for="filter">Filtra por descripción:</label>
         <input asp-for="filter" type="text">
-        <br>
         <button type="submit">Buscar</button>
     </form>
-
+    <br>
     <form method="get" asp-action="DeleteAllPatientAppointments">
         <button type="submit">Borrar todas las citas de un paciente</button>
     </form>
 
+    <br>
+
     <p>
-        <a asp-action="Create">Agrega una nueva cita</a>
+        <a asp-action="Create" class="btn btn-primary btn-sm">Agrega una nueva cita</a>
     </p>
 
     <table>
@@ -101,9 +114,8 @@
                     <td>@Html.DisplayFor(modelItem => item.Doctor.Name)</td>
                     <td>@Html.DisplayFor(modelItem => item.Patient.Name)</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+                       <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas dar de baja esta cita?')">borrar</a>
                     </td>
                 </tr>
             }

@@ -72,25 +72,30 @@
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Id del doctor</label>
-                    <select asp-for="DoctorId" class="form-control" asp-items="ViewBag.DoctorId"></select>
+                    <label class="control-label">Nombre del doctor</label>
+                    <select asp-for="DoctorId" class="form-control" asp-items="@ViewBag.DoctorId">
+                        <option value="">Selecciona Doctor</option>
+                    </select>
                     <span asp-validation-for="DoctorId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Id del paciente</label>
-                    <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
+                    <label class="control-label">Nombre del paciente</label>
+                    <select asp-for="PatientId" class="form-control" asp-items="@ViewBag.PatientId">
+                        <option value="">Selecciona Doctor</option>
+                    </select>
                     <span asp-validation-for="PatientId" class="text-danger"></span>
                 </div>
                 <br>
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                     <a asp-action="Index">Volver</a>
                 </div>
             </form>
         </div>
     </div>
     
     <div></div>
-        <a asp-action="Index">Volver</a>
+       
     </div>
 </body>
 </html>

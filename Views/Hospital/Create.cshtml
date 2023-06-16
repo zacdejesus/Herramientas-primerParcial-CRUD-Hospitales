@@ -8,75 +8,11 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f9fc;
-            margin: 0;
-        }
 
-        h1 {
-            color: #2779bd;
-            margin-bottom: 20px;
-        }
-
-        hr {
-            border: none;
-            border-top: 1px solid #ccc;
-            margin: 20px 0;
-        }
-
-        form {
-            max-width: 400px;
-            background-color: #fff;
-            border-radius: 4px;
-            padding: 20px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .control-label {
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 8px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .text-danger {
-            color: #dc3545;
-        }
-
-        .btn-primary {
-            background-color: #2779bd;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-primary:hover {
-            background-color: #1c6da8;
-        }
-
-        a {
-            text-decoration: none;
-            color: #2779bd;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
 </head>
 <body>
-    <h1>Create</h1>
-
+    <h1>Crear</h1>
+    <br>
     <h4>Hospital</h4>
     <hr />
     <div class="row">
@@ -88,11 +24,13 @@
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
+                <br>
                 <div class="form-group">
                     <label class="control-label">direccion</label>
                     <input asp-for="Address" class="form-control" />
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
+                <br>
                 <div class="form-group">
                     <input type="submit" value="Crear" class="btn btn-primary" />
                 </div>

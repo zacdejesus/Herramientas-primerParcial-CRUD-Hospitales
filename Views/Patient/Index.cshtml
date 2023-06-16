@@ -90,6 +90,12 @@
             margin-right: 5px;
         }
 
+                .btn-primary {
+            color: #fff;
+            background-color: #2779bd;
+            border-color: #2779bd;
+        }
+
     </style>
 </head>
 <body>
@@ -98,13 +104,13 @@
     <form method="get" asp-action="Index">
         <label for="checkbox">Buscar por nombre o edad:</label>
         <input asp-for="filter" type="text">
-        <br>
+        
         <button type="submit">Buscar</button>
     </form>
     <br>
 
     <p>
-        <a asp-action="Create">Crear paciente nuevo</a>
+        <a asp-action="Create" class="btn btn-primary btn-sm">Crear paciente nuevo</a>
     </p>
 
     <table class="table">
@@ -129,9 +135,8 @@
                         @Html.DisplayFor(modelItem => item.Age)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas borrar este paciente?')">borrar</a>
                     </td>
                 </tr>
             }

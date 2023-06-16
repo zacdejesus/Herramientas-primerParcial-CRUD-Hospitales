@@ -9,10 +9,11 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body {
+       body {
             font-family: Arial, sans-serif;
             background-color: #f7f9fc;
             margin: 0;
+            padding: 20px;
         }
 
         h1 {
@@ -20,44 +21,33 @@
             margin-bottom: 20px;
         }
 
-        h4 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        hr {
-            border: none;
-            height: 1px;
-            background-color: #dcecff;
+        .details-section {
             margin-bottom: 20px;
         }
 
-        .row {
-            margin-left: -15px;
-            margin-right: -15px;
-        }
-
-        .col-sm-2,
-        .col-sm-10 {
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        .col-sm-2 {
-            font-weight: bold;
+        .details-section h2 {
+            font-size: 1.2em;
             color: #333;
-        }
-
-        .col-sm-10 {
             margin-bottom: 10px;
         }
 
-        a {
-            text-decoration: none;
-            color: #2779bd;
+        .details-section p {
+            margin: 0;
+            color: #555;
         }
 
-        a:hover {
+        .actions-section {
+            margin-top: 20px;
+        }
+
+        .actions-section a {
+            display: inline-block;
+            margin-right: 10px;
+            text-decoration: none;
+            
+        }
+
+        .actions-section a:hover {
             text-decoration: underline;
         }
     </style>
@@ -70,40 +60,40 @@
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Name)
+                Nombre
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Name)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Age)
+                Edad
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Age)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.IsAvailable)
+                Esta disponible?
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.IsAvailable)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Specialty)
+                Especialidad
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Specialty)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Hospital)
+                Hospital
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Hospital.Id)
+                @Html.DisplayFor(model => model.Hospital.Name)
             </dd>
         </dl>
     </div>
     <div>
-        <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
-        <a asp-action="Index">Volver a la Lista</a>
+        <a asp-action="Edit" class="btn btn-primary btn-sm" asp-route-id="@Model?.Id">Editar</a>
+        <a asp-action="Index" class="btn btn-secondary btn-sm">Volver</a>
     </div>
 </body>
 </html>

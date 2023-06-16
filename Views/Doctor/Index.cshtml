@@ -21,17 +21,6 @@
             margin-bottom: 20px;
         }
 
-        input[type="text"],
-        input[type="checkbox"],
-        button {
-            padding: 8px;
-            font-size: 14px;
-            border-radius: 4px;
-            border: 1px solid #b6d4f2;
-            margin-bottom: 10px;
-            background-color: #fff;
-        }
-
         label {
             margin-right: 10px;
         }
@@ -49,7 +38,7 @@
         }
 
         th {
-            background-color: #e7f1fd;
+            
             font-weight: bold;
             color: #2779bd;
         }
@@ -62,6 +51,30 @@
         a:hover {
             text-decoration: underline;
         }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 200px;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #2779bd;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+                .btn-primary {
+            color: #fff;
+            background-color: #2779bd;
+            border-color: #2779bd;
+        }
     </style>
 </head>
 <body>
@@ -70,15 +83,14 @@
     <form method="get" asp-action="Index">
         <label for="checkbox">Buscar por nombre, edad o Especialidad:</label>
         <input asp-for="filter" type="text">
+        <button type="submit">Buscar</button>
         <br>
         <label for="checkbox">Buscar por disponibles:</label>
         <input asp-for="isAvailable" type="checkbox">
-        <br>
-        <button type="submit">Buscar</button>
     </form>
     <br>
     <p>
-        <a asp-action="Create">Crea un nuevo doctor</a>
+        <a asp-action="Create" class="btn btn-primary btn-sm">Crea un nuevo doctor</a>
     </p>
 
     <table class="table">
@@ -88,7 +100,6 @@
                 <th>Edad</th>
                 <th>Esta disponible</th>
                 <th>Especialidad</th>
-                <th>Hospital Id</th>
                 <th></th>
             </tr>
         </thead>
@@ -100,11 +111,9 @@
                     <td>@Html.DisplayFor(modelItem => item.Age)</td>
                     <td>@Html.DisplayFor(modelItem => item.IsAvailable)</td>
                     <td>@Html.DisplayFor(modelItem => item.Specialty)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Hospital.Id)</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas dar de baja esta doctor?')">Dar de baja</a>
                     </td>
                 </tr>
             }

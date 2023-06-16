@@ -52,7 +52,7 @@ public class HospitalService : IHospitalService
 
     public async Task<Hospital?> GetById(int? id)
     {
-        var hospitalTask = await _context.Hospitals.FirstOrDefaultAsync(m => m.Id == id);
+        var hospitalTask = await _context.Hospitals.Include(a => a.Doctors).FirstOrDefaultAsync(m => m.Id == id);
 
         return hospitalTask;
     }

@@ -13,27 +13,11 @@
             font-family: Arial, sans-serif;
             background-color: #f7f9fc;
             margin: 0;
-            
         }
 
         h1 {
             color: #2779bd;
             margin-bottom: 20px;
-        }
-
-        form {
-            margin-bottom: 20px;
-        }
-
-        input[type="text"],
-        input[type="checkbox"],
-        button {
-            padding: 8px;
-            font-size: 14px;
-            border-radius: 4px;
-            border: 1px solid #b6d4f2;
-            margin-bottom: 10px;
-            background-color: #fff;
         }
 
         label {
@@ -53,7 +37,7 @@
         }
 
         th {
-          
+            
             font-weight: bold;
             color: #2779bd;
         }
@@ -66,6 +50,30 @@
         a:hover {
             text-decoration: underline;
         }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 200px;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #2779bd;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+                .btn-primary {
+            color: #fff;
+            background-color: #2779bd;
+            border-color: #2779bd;
+        }
     </style>
 </head>
 <body>
@@ -74,12 +82,11 @@
     <form method="get" asp-action="Index">
         <label for="checkbox">Buscar por nombre o direccion:</label>
         <input asp-for="filter" />
-        <br>
         <button type="submit">Buscar</button>
     </form>
 
     <p>
-        <a asp-action="Create">Agrega un hospital</a>
+        <a asp-action="Create" class="btn btn-primary btn-sm">Agrega un hospital</a>
     </p>
 
     <table>
@@ -91,11 +98,9 @@
                 <th>
                     Direccion
                 </th>
+     
                 <th>
-                    Doctores
-                </th>
-                <th>
-                    Acciones
+                    
                 </th>
             </tr>
         </thead>
@@ -108,16 +113,10 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Address)
                     </td>
+
                     <td>
-                        @foreach (var item2 in item.Doctors) {
-                            @Html.DisplayFor(modelItem => item2.Name)
-                            <br/>
-                        }
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Detalle</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas borrar este doctor?')">borrar</a>
                     </td>
                 </tr>
             }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OeIWQ3z85G2rKDq57Pgryq0k8oeGQtR+3VMTMeT+qUgTOgyoc1kANXgcVZYSZa/JBLDmSHBB4Rvaxc8Zrz9eJw==",
+  "dgSpecHash": "i63QKU8rZipGCz2GATr2k+j3/L809+IYgI+tZ15yL+sItdb1bBhxTllQQrjX5dw3sY3fzzU0i8UPFrAfh5g3gA==",
   "success": true,
-  "projectFilePath": "/Users/z/Desktop/Hospitals/Hospitals.csproj",
+  "projectFilePath": "/Users/z/Desktop/ISTEA/Herramientas/Herramientas-primerParcial-CRUD-Hospitales/Hospitals.csproj",
   "expectedPackageFiles": [
     "/Users/z/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/z/.nuget/packages/microsoft.aspnetcore.cryptography.internal/7.0.4/microsoft.aspnetcore.cryptography.internal.7.0.4.nupkg.sha512",

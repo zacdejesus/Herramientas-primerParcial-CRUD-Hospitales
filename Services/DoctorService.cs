@@ -59,7 +59,7 @@ public class DoctorService : IDoctorService
 
     public async Task<Doctor?> GetById(int? id)
     {
-        var task = await _context.Doctors.FirstOrDefaultAsync(m => m.Id == id);
+        var task = await _context.Doctors.Include(x => x.Hospital).FirstOrDefaultAsync(m => m.Id == id);
 
         return task;
     }

@@ -48,7 +48,7 @@ namespace Hospitals.Controllers
         [Authorize(Roles = "senior,semisenior")]
         public IActionResult Create()
         {
-            ViewData["HospitalId"] = new SelectList(_doctorService.getContext().Hospitals, "Id", "Id");
+            ViewData["HospitalId"] = new SelectList(_doctorService.getContext().Hospitals, "Id", "Name");
             return View();
         }
 
@@ -77,7 +77,7 @@ namespace Hospitals.Controllers
             {
                 return NotFound();
             }
-            ViewData["HospitalId"] = new SelectList(_doctorService.getContext().Hospitals, "Id", "Id", doctor.HospitalId);
+            ViewData["HospitalId"] = new SelectList(_doctorService.getContext().Hospitals, "Id", "Name", doctor.HospitalId);
             return View(doctor);
         }
 
